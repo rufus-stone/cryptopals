@@ -9,6 +9,7 @@ add_subdirectory(cpr)
 include_directories(src)
 include_directories(include)
 include_directories(${CPR_INCLUDE_DIRS})
+include_directories(utils/include)
 
 add_executable(cryptopals_challenges main.cpp)
 
