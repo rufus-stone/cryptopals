@@ -1,8 +1,9 @@
 #include <iostream>
 
-#include "set_1/all.hpp"
+#include "all.hpp"
 
 int main()
 {
-  set1::challenge1::run();
+  // Set 1 challenges
+  set_01::run_all();
 }
