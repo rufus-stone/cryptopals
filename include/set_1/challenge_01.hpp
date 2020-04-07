@@ -15,9 +15,9 @@ void run()
 
   auto result = base64::encode(hex::decode(data));
 
-  LOG_INFO("Data:\n\n" << data);
+  LOG_INFO("Input  : " << data);
 
-  LOG_INFO("Result:\n\n" << result);
+  LOG_INFO("Output : " << result);
 
   assert(result == expected_result);
 }

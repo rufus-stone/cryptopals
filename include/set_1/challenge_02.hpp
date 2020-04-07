@@ -16,10 +16,10 @@ void run()
 
   auto result = bitwise::xor_with_key(data, key);
 
-  LOG_INFO("Data:\n\n" << hex::encode(data));
-  LOG_INFO("Key:\n\n" << hex::encode(key));
+  LOG_INFO("Input   : " << hex::encode(data));
+  LOG_INFO("XOR key : " << hex::encode(key));
 
-  LOG_INFO("Result:\n\n" << hex::encode(result));
+  LOG_INFO("Output  : " << hex::encode(result));
 
   assert(result == expected_result);
 }
