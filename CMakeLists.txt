@@ -17,3 +17,5 @@ target_link_libraries(cryptopals_challenges ${CPR_LIBRARIES})
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
+
+target_compile_features(cryptopals_challenges PUBLIC cxx_std_17)
