@@ -6,6 +6,8 @@
 #include <filesystem> // For filesystem stuff
 #include <cstdlib> // For getting the path to the home dire
 
+#include "downloader.hpp"
+
 namespace set_01::challenge_04
 {
 
@@ -43,70 +45,16 @@ void run()
 {
   LOG_INFO("\n\n  [ Set 1 : Challenge 4 ]  \n");
 
-  auto home_path_ptr = std::getenv("HOME");
+  auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/4.txt", 1, 4);
 
-  // Abort condition - did we find the user's home directory?
-  if (home_path_ptr == nullptr)
+  if (!std::filesystem::exists(file_path))
   {
-    LOG_ERROR("Couldn't get path to home directory!");
+    LOG_ERROR("Failed to get data for Set 1 : Challenge 4!");
     return;
-  }
-
-  // Build path to the Desktop folder
-  const auto home_path = std::string{home_path_ptr};
-  auto desktop_path = std::filesystem::path{home_path + "/Desktop"};
-
-  // Abort condition - is the Desktop folder where we expect it to be?
-  if (!std::filesystem::exists(desktop_path) || !std::filesystem::is_directory(desktop_path))
-  {
-    LOG_ERROR("Couldn't find the Desktop folder!");
-    return;
-  }
-
-  // Build path to the set 1 challenges folder
-  auto set_01_dir_path = std::filesystem::path{desktop_path / "challenges/1"};
-
-  // If the set 1 challenges folder doesn't exist, create it on the Desktop
-  if (!std::filesystem::exists(set_01_dir_path) || !std::filesystem::is_directory(set_01_dir_path))
-  {
-    LOG_INFO("Directory doesn't exist! Creating it now...");
-    std::filesystem::create_directories(set_01_dir_path);
-  } else
-  {
-    LOG_INFO("Directory already exists.");
-  }
-
-  // Build path to the data file for challenge 4
-  const auto set_01_challenge_04_path = set_01_dir_path / "4.challenge";
-
-  // Check if we've already downloaded this challenge's data file
-  if (!std::filesystem::exists(set_01_challenge_04_path) || (std::filesystem::is_regular_file(set_01_challenge_04_path) && std::filesystem::is_empty(set_01_challenge_04_path)))
-  {
-    LOG_INFO("Downloading challenge 4 data file...");
-
-    // Download the file - disable SSL verification as otherw we get the error: "SSL certificate problem: unable to get local issuer certificate"
-    auto result = cpr::Get(cpr::Url{"https://cryptopals.com/static/challenge-data/4.txt"}, cpr::VerifySsl{false});
-
-    LOG_INFO("Download status: " << result.status_code);
-
-    // Abort condition - did we actually download anything?
-    if (result.status_code != 200 || result.text.empty())
-    {
-      LOG_ERROR("Failed to download challenge data!");
-      return;
-    }
-
-    // Save the file to disk
-    auto file_out = std::ofstream{set_01_challenge_04_path, std::ios::binary};
-    file_out << result.text;
-    file_out.close();
-  } else
-  {
-    LOG_INFO("Already downloaded challenge 4 data file...\n");
   }
 
   // Open the file
-  auto file_in = std::ifstream{set_01_challenge_04_path, std::ios::binary};
+  auto file_in = std::ifstream{file_path, std::ios::binary};
 
   // Read in a line at a time
   auto line = std::string{};
