@@ -52,7 +52,7 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
   // Check if we've already downloaded this challenge's data file
   if (!std::filesystem::exists(set_challenge_path) || (std::filesystem::is_regular_file(set_challenge_path) && std::filesystem::is_empty(set_challenge_path)))
   {
-    LOG_INFO("Downloading challenge 4 data file...");
+    LOG_INFO("Downloading challenge data file...");
 
     // Download the file - disable SSL verification as otherw we get the error: "SSL certificate problem: unable to get local issuer certificate"
     auto result = cpr::Get(cpr::Url{url_string}, cpr::VerifySsl{false});
@@ -75,7 +75,7 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
     
   } else
   {
-    LOG_INFO("Already downloaded challenge 4 data file...\n");
+    LOG_INFO("Already downloaded challenge data file...\n");
     return set_challenge_path;
   }
 }
