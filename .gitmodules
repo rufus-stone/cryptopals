@@ -1,3 +1,6 @@
 [submodule "cpr"]
 	path = cpr
 	url = git@github.com:whoshuu/cpr.git
+[submodule "hamarr"]
+	path = hamarr
+	url = git@github.com:rufus-stone/hamarr.git
