@@ -14,14 +14,14 @@ namespace set_01
 
 void run_all()
 {
-  set_01::challenge_01::run();
-  set_01::challenge_02::run();
-  set_01::challenge_03::run();
-  set_01::challenge_04::run();
-  set_01::challenge_05::run();
-  set_01::challenge_06::run();
-  set_01::challenge_07::run();
-  set_01::challenge_08::run();
+  hmr::profile::benchmark(set_01::challenge_01::run);
+  hmr::profile::benchmark(set_01::challenge_02::run);
+  hmr::profile::benchmark(set_01::challenge_03::run);
+  hmr::profile::benchmark(set_01::challenge_04::run);
+  hmr::profile::benchmark(set_01::challenge_05::run);
+  hmr::profile::benchmark(set_01::challenge_06::run);
+  hmr::profile::benchmark(set_01::challenge_07::run);
+  hmr::profile::benchmark(set_01::challenge_08::run);
 }
 
 } // namespace set_01
