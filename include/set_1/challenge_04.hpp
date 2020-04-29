@@ -80,31 +80,16 @@ void run()
   // Loop through the challenge data - one of these has been XORed with a single char key, the rest are gibberish
   for (const auto data : data_vec)
   {
-    uint8_t key = 0x00;
+    auto possible_keys = hmr::analysis::solve_single_byte_xor(hmr::hex::decode(data));
 
-    auto possible_keys_map = std::map<uint8_t, std::string>{};
-
-    // Iterate through all possible single byte keys
-    for (std::size_t n = 0; n <= std::numeric_limits<uint8_t>::max(); ++n)
+    if (!possible_keys.empty())
     {
-      auto result = bitwise::xor_with_key(hex::decode(data), key);
-
-      if (analysis::looks_like_english(result))
-      {
-        possible_keys_map.insert({key, result});
-      }
-
-      key++;
-    }
-
-    if (possible_keys_map.size() > 0)
-    {
-      LOG_INFO("Found " << possible_keys_map.size() << " candidate keys:");
-      for (const auto &kvp : possible_keys_map)
+      LOG_INFO("Found " << possible_keys.size() << " candidate keys:");
+      for (const auto &key : possible_keys)
       {
         LOG_INFO("Input   : " << data);
-        LOG_INFO("XOR key : " << hex::encode(kvp.first));
-        LOG_INFO("Output  : " << kvp.second);
+        LOG_INFO("XOR key : " << hex::encode(key));
+        LOG_INFO("Output  : " << hmr::bitwise::xor_with_key(hmr::hex::decode(data), key));
       }
     }
   }
