@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include <openssl/evp.h>
+#include <openssl/aes.h>
 
 namespace set_01::challenge_07
 {
@@ -16,23 +17,16 @@ auto aes_ecb_decrypt(std::string_view input, std::string_view key)
   auto ciphertext_ptr = reinterpret_cast<const uint8_t *>(input.data());
   auto key_ptr = reinterpret_cast<const uint8_t *>(key.data());
 
-  auto output = std::vector<uint8_t>{};
-  output.reserve(len);
+  auto output = std::vector<uint8_t>(len, 0x00);
 
   LOG_INFO("AES decrypting in ECB mode using key: " << hmr::hex::encode(key));
 
-  auto ctx = EVP_CIPHER_CTX_new();
-  EVP_CIPHER_CTX_init(ctx);
-  EVP_DecryptInit_ex(ctx, EVP_aes_128_ecb(), nullptr, key_ptr, nullptr);
+  AES_KEY aes_key;
+  AES_set_decrypt_key(key_ptr, 128, &aes_key);
+  AES_decrypt(ciphertext_ptr, output.data(), &aes_key);
+  AES_decrypt(ciphertext_ptr+16, output.data()+16, &aes_key); // Need to loop through all the blocks
 
-  int outlen;
-  EVP_DecryptUpdate(ctx, output.data(), &outlen, ciphertext_ptr, len);
-  LOG_INFO("outlen: " << outlen);
-  EVP_DecryptFinal_ex(ctx, output.data() + outlen, &outlen);
-  LOG_INFO("outlen: " << outlen);
-
-  EVP_CIPHER_CTX_cleanup(ctx);
-  EVP_CIPHER_CTX_free(ctx);
+  LOG_INFO(output.size());
 
   return output;
 }
@@ -83,6 +77,11 @@ void run()
   if (!decrypted.empty())
   {
     LOG_INFO("Something happened!");
+    auto result = std::string{};
+
+    std::copy(std::begin(decrypted), std::end(decrypted), std::back_inserter(result));
+
+    LOG_INFO(result);
   }
 
 }
