@@ -4,6 +4,7 @@
 
 int main()
 {
-  // Set 1 challenges
+  // Run all challenges
   set_01::run_all();
+  set_02::run_all();
 }

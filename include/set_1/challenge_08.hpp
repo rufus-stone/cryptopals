@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "downloader.hpp"
+
 namespace set_01::challenge_08
 {
 
