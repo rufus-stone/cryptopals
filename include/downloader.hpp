@@ -6,10 +6,86 @@
 #include <filesystem> // For filesystem stuff
 #include <cstdlib> // For getting the path to the home directory
 
+#include <string>
+#include <vector>
+
 #include "utils.hpp"
 
 namespace cp
 {
+
+// Read in a file one line at a time, and add each line to a vector
+std::vector<std::string> file_to_vector(const std::filesystem::path &file_path)
+{
+  if (!std::filesystem::exists(file_path))
+  {
+    LOG_ERROR("Failed to find file path:" << file_path);
+    return std::vector<std::string>{};
+  }
+
+  // Open the file
+  auto file_in = std::ifstream{file_path, std::ios::binary};
+
+  // Read in a line at a time
+  auto line = std::string{};
+  auto data = std::vector<std::string>{};
+  while (std::getline(file_in, line))
+  {
+    data.push_back(line);
+  }
+
+  // Close the file if necessary - not sure this is needed...
+  if (file_in.is_open())
+  {
+    file_in.close();
+  }
+
+  // Abort condition - did we read any lines?
+  if (data.empty())
+  {
+    LOG_ERROR("Failed to read any data from file!");
+    return std::vector<std::string>{};
+  }
+
+  return data;
+}
+
+// Read in a file one line at a time, and concatenate all lines together into a single string
+std::string file_to_string(const std::filesystem::path &file_path)
+{
+  if (!std::filesystem::exists(file_path))
+  {
+    LOG_ERROR("Failed to find file path:" << file_path);
+    return std::string{};
+  }
+
+  // Open the file
+  auto file_in = std::ifstream{file_path, std::ios::binary};
+
+  // Read in a line at a time
+  auto line = std::string{};
+  auto data = std::string{};
+  while (std::getline(file_in, line))
+  {
+    data += line;
+  }
+
+  // Close the file if necessary - not sure this is needed...
+  if (file_in.is_open())
+  {
+    file_in.close();
+  }
+
+  // Abort condition - did we read any lines?
+  if (data.empty())
+  {
+    LOG_ERROR("Failed to read any data from file!");
+    return std::string{};
+  }
+
+  return data;
+}
+
 
 std::filesystem::path download_challenge_data(const std::string &url_string, const std::size_t set_num, const std::size_t chall_num)
 {

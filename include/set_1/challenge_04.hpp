@@ -47,38 +47,10 @@ void run()
 
   auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/4.txt", 1, 4);
 
-  if (!std::filesystem::exists(file_path))
-  {
-    LOG_ERROR("Failed to get data for Set 1 : Challenge 4!");
-    return;
-  }
-
-  // Open the file
-  auto file_in = std::ifstream{file_path, std::ios::binary};
-
-  // Read in a line at a time
-  auto line = std::string{};
-  auto data_vec = std::vector<std::string>{};
-  while (std::getline(file_in, line))
-  {
-    data_vec.push_back(std::move(line));
-  }
-
-  // Close the file if necessary - not sure this is needed...
-  if (file_in.is_open())
-  {
-    file_in.close();
-  }
-
-  // Abort condition - did we read any lines?
-  if (data_vec.empty())
-  {
-    LOG_ERROR("Failed to read any lines from file!");
-    return;
-  }
+  auto data_vec = cp::file_to_vector(file_path);
 
   // Loop through the challenge data - one of these has been XORed with a single char key, the rest are gibberish
-  for (const auto data : data_vec)
+  for (const auto &data : data_vec)
   {
     auto possible_keys = hmr::analysis::solve_single_byte_xor(hmr::hex::decode(data));
 
