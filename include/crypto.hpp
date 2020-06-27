@@ -87,7 +87,7 @@ std::string aes_ecb_encrypt(std::string_view input, std::string_view key)
 {
   // Will the input need padding? Make sure we account for this when initialising the output vector
   const std::size_t len = input.size();
-  const std::size_t padding = ((len % 16) == 0) ? 0 : 16 - (len % 16);
+  //const std::size_t padding = ((len % 16) == 0) ? 0 : 16 - (len % 16);
 
   auto result = std::string{};
 
@@ -242,7 +242,6 @@ std::string aes_cbc_decrypt(std::string_view input, std::string_view key, const 
   auto previous_ciphertext = iv;
 
   // Decrypt all the blocks
-  std::size_t offset;
   for (std::size_t offset = 0; offset < len; offset += 16, ++current_block)
   {
     // Decrypt the block

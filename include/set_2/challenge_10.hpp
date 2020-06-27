@@ -32,7 +32,6 @@ void run()
 
   // Let's work with a string view, for more efficient sub-string creation
   auto data_view = std::string_view{decoded};
-  const std::size_t len = data_view.size();
   
   // Let's test out the ECB encryption/decryption
   auto ecb_ciphertext = hmr::hex::decode("5f68aedde83f2da44311978e1114cb9be708fdb912ea9bdc7efc9a0eeb6bcec808bfdc8c7df07eb748bce24a6bcad6e8254113c412e3cca33848cdfa81170348");

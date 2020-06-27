@@ -20,3 +20,4 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
 target_compile_features(cryptopals_challenges PUBLIC cxx_std_17)
+target_compile_options(cryptopals_challenges PRIVATE -Werror -Wall -Wextra -Wold-style-cast)

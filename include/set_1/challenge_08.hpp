@@ -7,30 +7,6 @@
 namespace set_01::challenge_08
 {
 
-bool has_repeated_blocks(std::string_view input, std::size_t block_size = 16)
-{
-  auto len = input.size();
-  assert(len % block_size == 0);
-
-  for (std::size_t offset = 0; offset + block_size <= (len - block_size); offset += block_size) // go until len - 16 so that we ignore the final block, as we'll already know this isn't the ECB we're looking for by that point
-  {
-    // Get the next block
-    auto block = input.substr(offset, block_size);
-
-    // Does this block occur again in the data
-    auto pos = input.find(block, offset + block_size);
-    if (pos != std::string_view::npos)
-    {
-      LOG_INFO("Data:  " << hmr::hex::encode(input));
-      LOG_INFO("Block: " << hmr::hex::encode(block));
-      LOG_INFO("Found same block at offset: " << pos);
-      return true;
-    }
-  }
-
-  return false;
-}
-
 ////////////////////////////////////////////////
 void run()
 {
@@ -46,8 +22,9 @@ void run()
     auto decoded = hmr::hex::decode(data);
     auto data_view = std::string_view{decoded};
 
-    if (has_repeated_blocks(data_view))
+    if (hmr::analysis::repeated_blocks(data_view))
     {
+      LOG_INFO("Found repeated block in: " << data);
       break;
     }
   }
