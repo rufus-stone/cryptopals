@@ -38,20 +38,20 @@ void run()
   auto plaintext = std::string{"This is a really banging test string, whatwhaaaaaaat!"};
   auto key = std::string{"YELLOW SUBMARINE"};
 
-  assert(cp::aes_ecb_decrypt(ecb_ciphertext, key) == plaintext);
-  assert(cp::aes_ecb_encrypt(plaintext, key) == ecb_ciphertext);
+  assert(hmr::crypto::aes_ecb_decrypt(ecb_ciphertext, key) == plaintext);
+  assert(hmr::crypto::aes_ecb_encrypt(plaintext, key) == ecb_ciphertext);
 
   // Now try CBC mode
   auto cbc_ciphertext = hmr::hex::decode("5f68aedde83f2da44311978e1114cb9bbd66daf644691a3786c6a857135a454e720a971d5450cff3f0271048d29f73fe2c27113948368ace3375d1b8b77de590");
   auto iv = std::string{"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"s};
 
-  assert(cp::aes_cbc_decrypt(cbc_ciphertext, key, iv) == plaintext);
-  assert(cp::aes_cbc_encrypt(plaintext, key, iv) == cbc_ciphertext);
+  assert(hmr::crypto::aes_cbc_decrypt(cbc_ciphertext, key, iv) == plaintext);
+  assert(hmr::crypto::aes_cbc_encrypt(plaintext, key, iv) == cbc_ciphertext);
 
   LOG_INFO("\nAES ECB and CBC checks passed.\n");
 
   // Now that we know ECB and CBC mode are both working fine, let's decrypt the challenge data
-  auto result = cp::aes_cbc_decrypt(data_view, key, iv);
+  auto result = hmr::crypto::aes_cbc_decrypt(data_view, key, iv);
 
   LOG_INFO(result);
 }

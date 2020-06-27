@@ -22,7 +22,7 @@ void run()
   auto encrypt = [&appended](const std::string &input, std::string_view key) -> std::string
   {
     auto plaintext = input + appended;
-    auto ciphertext = cp::aes_ecb_encrypt(plaintext, key);
+    auto ciphertext = hmr::crypto::aes_ecb_encrypt(plaintext, key);
 
     return ciphertext;
   };

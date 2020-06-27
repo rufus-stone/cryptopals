@@ -23,7 +23,7 @@ void run()
   auto data_view = std::string_view{decoded};
 
   // The data has been encrypted via AES-128 in ECB mode under the key: YELLOW SUBMARINE
-  auto decrypted = cp::aes_ecb_decrypt(data_view, "YELLOW SUBMARINE");
+  auto decrypted = hmr::crypto::aes_ecb_decrypt(data_view, "YELLOW SUBMARINE");
 
   if (!decrypted.empty())
   {
