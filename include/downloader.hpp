@@ -1,15 +1,14 @@
 #pragma once
 
-#include <cpr/cpr.h>
-
 #include <fstream> // For file i/o
 #include <filesystem> // For filesystem stuff
 #include <cstdlib> // For getting the path to the home directory
-
 #include <string>
 #include <vector>
 
 #include <spdlog/spdlog.h>
+
+#include <cpr/cpr.h>
 
 namespace cp
 {

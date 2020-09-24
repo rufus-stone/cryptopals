@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cpr/cpr.h>
-
 #include <fstream> // For file i/o
 #include <filesystem> // For filesystem stuff
 #include <cstdlib> // For getting the path to the home directory

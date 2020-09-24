@@ -2,8 +2,6 @@
 
 #include <cassert>
 
-#include <openssl/aes.h>
-
 #include <spdlog/spdlog.h>
 
 #include <hamarr/base64.hpp>

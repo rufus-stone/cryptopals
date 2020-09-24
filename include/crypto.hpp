@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-
 #include <string_view>
 #include <string>
 #include <vector>
