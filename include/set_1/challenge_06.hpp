@@ -34,7 +34,7 @@ void run()
 
   // Find the most likely key_size
   auto best_key_size = hmr::analysis::find_candidate_keysize(data_view).first;
-  
+
   // Now that we know the most likely key_size, break the input up into as many blocks of key_size length as possible (we can ignore any extra data that doesn't fit)
   auto max_blocks = len / best_key_size;
   auto blocks = std::vector<std::string_view>{};

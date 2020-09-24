@@ -148,7 +148,7 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
     file_out.close();
 
     return set_challenge_path;
-    
+
   } else
   {
     spdlog::info("Already downloaded challenge data file...");

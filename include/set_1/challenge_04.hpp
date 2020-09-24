@@ -27,7 +27,7 @@ std::vector<std::string> split(const std::string &input, const char delim = '\n'
 
   std::size_t line_start = 0;
   std::size_t line_end = input.find_first_of(delim);
-  
+
   if (line_end != std::string::npos)
   {
     spdlog::info("Newline at offset: {}", line_end);
@@ -40,7 +40,7 @@ std::vector<std::string> split(const std::string &input, const char delim = '\n'
     auto tmp = std::string(input.data());
     spdlog::info(tmp);
   }
-  
+
 
   return output;
 }
