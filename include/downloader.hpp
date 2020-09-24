@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-#include "hamarr.hpp"
+#include <spdlog/spdlog.h>
 
 namespace cp
 {
@@ -19,7 +19,7 @@ std::vector<std::string> file_to_vector(const std::filesystem::path &file_path)
 {
   if (!std::filesystem::exists(file_path))
   {
-    LOG_ERROR("Failed to find file path:" << file_path);
+    spdlog::error("Failed to find file path: {}", file_path.string());
     return std::vector<std::string>{};
   }
 
@@ -43,7 +43,7 @@ std::vector<std::string> file_to_vector(const std::filesystem::path &file_path)
   // Abort condition - did we read any lines?
   if (data.empty())
   {
-    LOG_ERROR("Failed to read any data from file!");
+    spdlog::error("Failed to read any data from file!");
     return std::vector<std::string>{};
   }
 
@@ -55,7 +55,7 @@ std::string file_to_string(const std::filesystem::path &file_path)
 {
   if (!std::filesystem::exists(file_path))
   {
-    LOG_ERROR("Failed to find file path:" << file_path);
+    spdlog::error("Failed to find file path: {}", file_path.string());
     return std::string{};
   }
 
@@ -79,7 +79,7 @@ std::string file_to_string(const std::filesystem::path &file_path)
   // Abort condition - did we read any lines?
   if (data.empty())
   {
-    LOG_ERROR("Failed to read any data from file!");
+    spdlog::error("Failed to read any data from file!");
     return std::string{};
   }
 
@@ -94,7 +94,7 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
   // Abort condition - did we find the user's home directory?
   if (home_path_ptr == nullptr)
   {
-    LOG_ERROR("Couldn't get path to home directory!");
+    spdlog::error("Couldn't get path to home directory!");
     return std::filesystem::path{};
   }
 
@@ -105,7 +105,7 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
   // Abort condition - is the Desktop folder where we expect it to be?
   if (!std::filesystem::exists(desktop_path) || !std::filesystem::is_directory(desktop_path))
   {
-    LOG_ERROR("Couldn't find the Desktop folder!");
+    spdlog::error("Couldn't find the Desktop folder!");
     return std::filesystem::path{};
   }
 
@@ -115,11 +115,11 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
   // If the given set folder doesn't exist, create it on the Desktop
   if (!std::filesystem::exists(set_dir_path) || !std::filesystem::is_directory(set_dir_path))
   {
-    LOG_INFO("Directory doesn't exist! Creating it now...");
+    spdlog::warn("Directory doesn't exist! Creating it now...");
     std::filesystem::create_directories(set_dir_path);
   } else
   {
-    LOG_INFO("Directory already exists.");
+    spdlog::info("Directory already exists.");
   }
 
   // Build path to the data file for the challenge
@@ -128,17 +128,17 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
   // Check if we've already downloaded this challenge's data file
   if (!std::filesystem::exists(set_challenge_path) || (std::filesystem::is_regular_file(set_challenge_path) && std::filesystem::is_empty(set_challenge_path)))
   {
-    LOG_INFO("Downloading challenge data file...");
+    spdlog::info("Downloading challenge data file...");
 
     // Download the file - disable SSL verification as otherw we get the error: "SSL certificate problem: unable to get local issuer certificate"
     auto result = cpr::Get(cpr::Url{url_string}, cpr::VerifySsl{false});
 
-    LOG_INFO("Download status: " << result.status_code);
+    spdlog::info("Download status: {}", result.status_code);
 
     // Abort condition - did we actually download anything?
     if (result.status_code != 200 || result.text.empty())
     {
-      LOG_ERROR("Failed to download challenge data!");
+      spdlog::error("Failed to download challenge data!");
       return std::filesystem::path{};
     }
 
@@ -151,7 +151,7 @@ std::filesystem::path download_challenge_data(const std::string &url_string, con
     
   } else
   {
-    LOG_INFO("Already downloaded challenge data file...\n");
+    spdlog::info("Already downloaded challenge data file...");
     return set_challenge_path;
   }
 }

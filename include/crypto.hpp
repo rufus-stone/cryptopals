@@ -6,7 +6,11 @@
 #include <string>
 #include <vector>
 
-#include "hamarr.hpp"
+#include <spdlog/spdlog.h>
+
+#include <hamarr/prng.hpp>
+#include <hamarr/crypto.hpp>
+#include <hamarr/hex.hpp>
 
 namespace cp
 {
@@ -21,9 +25,9 @@ std::string encrypt_under_random_key_and_mode(const std::string &input)
   auto bytes_to_prepend = hmr::prng::bytes(hmr::prng::number_between<std::size_t>(5, 10));
   auto bytes_to_append = hmr::prng::bytes(hmr::prng::number_between<std::size_t>(5, 10));
 
-  LOG_INFO("key:  " << hmr::hex::encode(key));
-  LOG_INFO("prep: " << hmr::hex::encode(bytes_to_prepend));
-  LOG_INFO("app:  " << hmr::hex::encode(bytes_to_append));
+  spdlog::info("key:  {}", hmr::hex::encode(key));
+  spdlog::info("prep: {}", hmr::hex::encode(bytes_to_prepend));
+  spdlog::info("app:  {}", hmr::hex::encode(bytes_to_append));
 
   auto modified_input = bytes_to_prepend + input + bytes_to_append;
 
@@ -36,7 +40,7 @@ std::string encrypt_under_random_key_and_mode(const std::string &input)
   {
     case 0:
     {
-      LOG_INFO("AES encrypting " << len << " bytes (padded to " << len + padding << ") in ECB mode.");
+      spdlog::info("AES encrypting {} bytes (padded to {}) in ECB mode.", len, len + padding);
 
       return hmr::crypto::aes_ecb_encrypt(modified_input, key);
     }
@@ -45,14 +49,14 @@ std::string encrypt_under_random_key_and_mode(const std::string &input)
     {
       // Generate a random IV
       auto iv = hmr::prng::bytes(16);
-      LOG_INFO("iv:   " << hmr::hex::encode(iv));
-      LOG_INFO("AES encrypting " << len << " bytes (padded to " << len + padding << ") in CBC mode.");
+      spdlog::info("iv:   {}", hmr::hex::encode(iv));
+      spdlog::info("AES encrypting {} bytes (padded to {}) in CBC mode.", len, len + padding);
 
       return hmr::crypto::aes_cbc_encrypt(modified_input, key, iv);
     }
 
     default:
-      LOG_INFO("This shouldn't happen!");
+      spdlog::info("This shouldn't happen!");
       return std::string{};
   }
 }

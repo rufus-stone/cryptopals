@@ -1,5 +1,12 @@
 #pragma once
 
+#include <spdlog/spdlog.h>
+
+#include <hamarr/hex.hpp>
+#include <hamarr/base64.hpp>
+#include <hamarr/bitwise.hpp>
+#include <hamarr/analysis.hpp>
+
 #include "downloader.hpp"
 
 namespace set_01::challenge_06
@@ -8,7 +15,7 @@ namespace set_01::challenge_06
 ////////////////////////////////////////////////
 void run()
 {
-  LOG_INFO("\n\n  [ Set 1 : Challenge 6 ]  \n");
+  spdlog::info("\n\n  [ Set 1 : Challenge 6 ]  \n");
 
   auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/6.txt", 1, 6);
 
@@ -18,7 +25,7 @@ void run()
 
   if (decoded.empty())
   {
-    LOG_ERROR("Failed to base64 decode data!");
+    spdlog::error("Failed to base64 decode data!");
   }
 
   // Let's work with a string view, for more efficient sub-string creation
@@ -65,12 +72,12 @@ void run()
 
     } else
     {
-      LOG_INFO("Found " << xor_keys.size() << " candidate keys for:");
-      LOG_INFO(hmr::hex::encode(transposed_block));
+      spdlog::info("Found {} candidate keys for:", xor_keys.size());
+      spdlog::info(hmr::hex::encode(transposed_block));
 
       for (const auto &xor_key : xor_keys)
       {
-        LOG_INFO("Key: " << hmr::hex::encode(xor_key));
+        spdlog::info("Key: {}", hmr::hex::encode(xor_key));
       }
 
       // We'll need to handle this situation if it arises!
@@ -80,19 +87,19 @@ void run()
   // If we successfully found a single ideal XOR key for each of the single byte XOR tests, let's try it out!
   if (probable_key.size() == best_key_size)
   {
-    LOG_INFO("\nXOR key is probably: " << hex::encode(probable_key));
+    spdlog::info("XOR key is probably: {}", hmr::hex::encode(probable_key));
 
-    LOG_INFO("\nTrying the key...\n");
+    spdlog::info("Trying the key...\n");
 
     // Try the key!
     auto result = hmr::bitwise::xor_with_key(data_view, probable_key);
 
     if (hmr::analysis::looks_like_english(result, true))
     {
-      LOG_INFO(result);
+      spdlog::info("Output :\n\n{}", result);
     } else
     {
-      LOG_INFO("Hmm, not quite right...");
+      spdlog::info("Hmm, not quite right...");
     }
   }
 }

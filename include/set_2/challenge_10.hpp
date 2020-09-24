@@ -1,13 +1,16 @@
 #pragma once
 
 #include <string>
-
 #include <cassert>
+
+#include <spdlog/spdlog.h>
+
+#include <hamarr/hex.hpp>
+#include <hamarr/base64.hpp>
+#include <hamarr/crypto.hpp>
 
 #include "downloader.hpp"
 #include "crypto.hpp"
-
-#include "hamarr.hpp"
 
 namespace set_02::challenge_10
 {
@@ -17,7 +20,7 @@ using namespace std::string_literals;
 ////////////////////////////////////////////////
 void run()
 {
-  LOG_INFO("\n\n  [ Set 2 : Challenge 10 ]  \n");
+  spdlog::info("\n\n  [ Set 2 : Challenge 10 ]  \n");
 
   auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/10.txt", 2, 10);
 
@@ -27,7 +30,7 @@ void run()
 
   if (decoded.empty())
   {
-    LOG_ERROR("Failed to base64 decode data!");
+    spdlog::error("Failed to base64 decode data!");
   }
 
   // Let's work with a string view, for more efficient sub-string creation
@@ -48,12 +51,12 @@ void run()
   assert(hmr::crypto::aes_cbc_decrypt(cbc_ciphertext, key, iv) == plaintext);
   assert(hmr::crypto::aes_cbc_encrypt(plaintext, key, iv) == cbc_ciphertext);
 
-  LOG_INFO("\nAES ECB and CBC checks passed.\n");
+  spdlog::info("AES ECB and CBC checks passed.");
 
   // Now that we know ECB and CBC mode are both working fine, let's decrypt the challenge data
   auto result = hmr::crypto::aes_cbc_decrypt(data_view, key, iv);
 
-  LOG_INFO(result);
+  spdlog::info("Output :\n\n{}", result);
 }
 
 } // namespace set_02::challenge_10

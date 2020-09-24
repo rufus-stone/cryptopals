@@ -2,6 +2,11 @@
 
 #include <cassert>
 
+#include <spdlog/spdlog.h>
+
+#include <hamarr/hex.hpp>
+#include <hamarr/analysis.hpp>
+
 #include "downloader.hpp"
 
 namespace set_01::challenge_08
@@ -10,7 +15,7 @@ namespace set_01::challenge_08
 ////////////////////////////////////////////////
 void run()
 {
-  LOG_INFO("\n\n  [ Set 1 : Challenge 8 ]  \n");
+  spdlog::info("\n\n  [ Set 1 : Challenge 8 ]  \n");
 
   auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/8.txt", 1, 8);
 
@@ -24,7 +29,7 @@ void run()
 
     if (hmr::analysis::repeated_blocks(data_view))
     {
-      LOG_INFO("Found repeated block in: " << data);
+      spdlog::info("Found repeated block in: {}", data);
       break;
     }
   }

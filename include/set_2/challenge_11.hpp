@@ -2,7 +2,10 @@
 
 #include <string>
 
-#include "hamarr.hpp"
+#include <spdlog/spdlog.h>
+
+#include <hamarr/hex.hpp>
+#include <hamarr/analysis.hpp>
 
 namespace set_02::challenge_11
 {
@@ -10,12 +13,12 @@ namespace set_02::challenge_11
 ////////////////////////////////////////////////
 void run()
 {
-  LOG_INFO("\n\n  [ Set 2 : Challenge 11 ]  \n");
+  spdlog::info("\n\n  [ Set 2 : Challenge 11 ]  \n");
 
   auto result = cp::encrypt_under_random_key_and_mode("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
-  LOG_INFO(hmr::hex::encode(result));
-  LOG_INFO(std::boolalpha << hmr::analysis::repeated_blocks(result));
+  spdlog::info(hmr::hex::encode(result));
+  spdlog::info(hmr::analysis::repeated_blocks(result));
 }
 
 } // namespace set_02::challenge_11

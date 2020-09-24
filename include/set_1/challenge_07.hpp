@@ -4,6 +4,11 @@
 
 #include <openssl/aes.h>
 
+#include <spdlog/spdlog.h>
+
+#include <hamarr/base64.hpp>
+#include <hamarr/crypto.hpp>
+
 #include "downloader.hpp"
 #include "crypto.hpp"
 
@@ -13,7 +18,7 @@ namespace set_01::challenge_07
 ////////////////////////////////////////////////
 void run()
 {
-  LOG_INFO("\n\n  [ Set 1 : Challenge 7 ]  \n");
+  spdlog::info("\n\n  [ Set 1 : Challenge 7 ]  \n");
 
   auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/7.txt", 1, 7);
   
@@ -27,7 +32,7 @@ void run()
 
   if (!decrypted.empty())
   {
-    LOG_INFO(decrypted);
+    spdlog::info("Output :\n\n{}", decrypted);
   }
 
 }

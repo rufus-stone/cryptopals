@@ -2,10 +2,6 @@
 
 #include <cassert>
 
-#include "hamarr.hpp"
-
-using namespace hmr;
-
 #include "downloader.hpp"
 #include "crypto.hpp"
 

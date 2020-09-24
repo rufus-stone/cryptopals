@@ -9,6 +9,8 @@
 #include "challenge_07.hpp"
 #include "challenge_08.hpp"
 
+#include <hamarr/profiling.hpp>
+
 namespace set_01
 {
 

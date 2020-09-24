@@ -2,7 +2,11 @@
 
 #include <string>
 
-#include "hamarr.hpp"
+#include <spdlog/spdlog.h>
+
+#include <hamarr/hex.hpp>
+#include <hamarr/base64.hpp>
+#include <hamarr/crypto.hpp>
 
 namespace set_02::challenge_12
 {
@@ -10,7 +14,7 @@ namespace set_02::challenge_12
 ////////////////////////////////////////////////
 void run()
 {
-  LOG_INFO("\n\n  [ Set 2 : Challenge 12 ]  \n");
+  spdlog::info("\n\n  [ Set 2 : Challenge 12 ]  \n");
 
   // Pretend we don't know what this key is!
   auto key = hmr::hex::decode("56 EB 4C 11 A2 1B 38 D9 E3 53 E0 28 CE 12 53 D1");
@@ -37,7 +41,7 @@ void run()
 
   auto result = encrypt("A", key);
 
-  LOG_INFO(hmr::hex::encode(result));
+  spdlog::info(hmr::hex::encode(result));
 }
 
 } // namespace set_02::challenge_12
