@@ -1,6 +1,6 @@
 # cryptopals
 
-Working through the cryptopals challenges
+Working through the [cryptopals challenges](https://cryptopals.com) in C++
 
 ## Dependencies
 
