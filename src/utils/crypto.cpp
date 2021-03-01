@@ -14,7 +14,7 @@
 namespace cp
 {
 
-std::string encrypt_under_random_key_and_mode(const std::string &input)
+auto encrypt_under_random_key_and_mode(const std::string &input) -> std::string
 {
   // Generate a random key, and randomly choose between ECB and CBC mode
   auto key = hmr::prng::bytes(16);
