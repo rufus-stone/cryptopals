@@ -1,17 +1,17 @@
-#pragma once
+#include "set_01/all_challenges.hpp"
 
 #include <spdlog/spdlog.h>
 
 #include <hamarr/hex.hpp>
 #include <hamarr/bitwise.hpp>
 
-namespace set_01::challenge_02
+namespace set_01
 {
 
 using namespace std::string_literals;
 
 ////////////////////////////////////////////////
-void run()
+void challenge_02()
 {
   spdlog::info("\n\n  [ Set 1 : Challenge 2 ]  \n");
 
@@ -29,4 +29,4 @@ void run()
   assert(result == expected_result);
 }
 
-} // namespace set_01::challenge_02
+} // namespace set_01

@@ -1,4 +1,4 @@
-#pragma once
+#include "set_02/all_challenges.hpp"
 
 #include <string>
 
@@ -7,11 +7,11 @@
 #include <hamarr/format.hpp>
 #include <hamarr/pkcs7.hpp>
 
-namespace set_02::challenge_09
+namespace set_02
 {
 
 ////////////////////////////////////////////////
-void run()
+void challenge_09()
 {
   spdlog::info("\n\n  [ Set 2 : Challenge 9 ]  \n");
 
@@ -22,9 +22,9 @@ void run()
 
   spdlog::info("Input  : {}", data);
 
-  spdlog::info("Output : {}", hmr::format::escape(result));
+  spdlog::info("Output : {}", hmr::fmt::escape(result));
 
   assert(result == expected_result);
 }
 
-} // namespace set_02::challenge_09
+} // namespace set_02

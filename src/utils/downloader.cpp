@@ -1,4 +1,4 @@
-#pragma once
+#include "utils/downloader.hpp"
 
 #include <fstream> // For file i/o
 #include <filesystem> // For filesystem stuff
@@ -14,7 +14,7 @@ namespace cp
 {
 
 // Read in a file one line at a time, and add each line to a vector
-std::vector<std::string> file_to_vector(const std::filesystem::path &file_path)
+auto file_to_vector(const std::filesystem::path &file_path) -> std::vector<std::string>
 {
   if (!std::filesystem::exists(file_path))
   {
@@ -50,7 +50,7 @@ std::vector<std::string> file_to_vector(const std::filesystem::path &file_path)
 }
 
 // Read in a file one line at a time, and concatenate all lines together into a single string
-std::string file_to_string(const std::filesystem::path &file_path)
+auto file_to_string(const std::filesystem::path &file_path) -> std::string
 {
   if (!std::filesystem::exists(file_path))
   {
@@ -86,7 +86,8 @@ std::string file_to_string(const std::filesystem::path &file_path)
 }
 
 
-std::filesystem::path download_challenge_data(const std::string &url_string, const std::size_t set_num, const std::size_t chall_num)
+// Download challenge data and return a std::filesystem::path to the download location
+auto download_challenge_data(const std::string &url_string, const std::size_t set_num, const std::size_t chall_num) -> std::filesystem::path
 {
   auto home_path_ptr = std::getenv("HOME");
 

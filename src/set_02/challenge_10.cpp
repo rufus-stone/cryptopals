@@ -1,4 +1,4 @@
-#pragma once
+#include "set_02/all_challenges.hpp"
 
 #include <string>
 #include <cassert>
@@ -9,16 +9,16 @@
 #include <hamarr/base64.hpp>
 #include <hamarr/crypto.hpp>
 
-#include "downloader.hpp"
-#include "crypto.hpp"
+#include "utils/downloader.hpp"
+#include "utils/crypto.hpp"
 
-namespace set_02::challenge_10
+namespace set_02
 {
 
 using namespace std::string_literals;
 
 ////////////////////////////////////////////////
-void run()
+void challenge_10()
 {
   spdlog::info("\n\n  [ Set 2 : Challenge 10 ]  \n");
 
@@ -59,4 +59,4 @@ void run()
   spdlog::info("Output :\n\n{}", result);
 }
 
-} // namespace set_02::challenge_10
+} // namespace set_02

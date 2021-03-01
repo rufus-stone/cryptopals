@@ -1,4 +1,4 @@
-#pragma once
+#include "set_01/all_challenges.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -7,13 +7,13 @@
 #include <hamarr/bitwise.hpp>
 #include <hamarr/analysis.hpp>
 
-#include "downloader.hpp"
+#include "utils/downloader.hpp"
 
-namespace set_01::challenge_06
+namespace set_01
 {
 
 ////////////////////////////////////////////////
-void run()
+void challenge_06()
 {
   spdlog::info("\n\n  [ Set 1 : Challenge 6 ]  \n");
 
@@ -104,4 +104,4 @@ void run()
   }
 }
 
-} // namespace set_01::challenge_06
+} // namespace set_01

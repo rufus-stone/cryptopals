@@ -1,4 +1,4 @@
-#pragma once
+#include "set_01/all_challenges.hpp"
 
 #include <fstream> // For file i/o
 #include <filesystem> // For filesystem stuff
@@ -8,10 +8,11 @@
 
 #include <hamarr/hex.hpp>
 #include <hamarr/bitwise.hpp>
+#include <hamarr/analysis.hpp>
 
-#include "downloader.hpp"
+#include "utils/downloader.hpp"
 
-namespace set_01::challenge_04
+namespace set_01
 {
 
 using namespace std::string_literals;
@@ -44,7 +45,7 @@ std::vector<std::string> split(const std::string &input, const char delim = '\n'
 }
 
 ////////////////////////////////////////////////
-void run()
+void challenge_04()
 {
   spdlog::info("\n\n  [ Set 1 : Challenge 4 ]  \n");
 
@@ -70,4 +71,4 @@ void run()
   }
 }
 
-} // namespace set_01::challenge_04
+} // namespace set_01
