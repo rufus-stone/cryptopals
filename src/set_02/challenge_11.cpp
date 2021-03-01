@@ -1,4 +1,4 @@
-#pragma once
+#include "set_02/all_challenges.hpp"
 
 #include <string>
 
@@ -7,11 +7,13 @@
 #include <hamarr/hex.hpp>
 #include <hamarr/analysis.hpp>
 
-namespace set_02::challenge_11
+#include "utils/crypto.hpp"
+
+namespace set_02
 {
 
 ////////////////////////////////////////////////
-void run()
+void challenge_11()
 {
   spdlog::info("\n\n  [ Set 2 : Challenge 11 ]  \n");
 
@@ -21,4 +23,4 @@ void run()
   spdlog::info(hmr::analysis::repeated_blocks(result));
 }
 
-} // namespace set_02::challenge_11
+} // namespace set_02

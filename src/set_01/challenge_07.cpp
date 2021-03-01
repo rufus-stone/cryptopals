@@ -1,4 +1,4 @@
-#pragma once
+#include "set_01/all_challenges.hpp"
 
 #include <cassert>
 
@@ -7,14 +7,14 @@
 #include <hamarr/base64.hpp>
 #include <hamarr/crypto.hpp>
 
-#include "downloader.hpp"
-#include "crypto.hpp"
+#include "utils/downloader.hpp"
+#include "utils/crypto.hpp"
 
-namespace set_01::challenge_07
+namespace set_01
 {
 
 ////////////////////////////////////////////////
-void run()
+void challenge_07()
 {
   spdlog::info("\n\n  [ Set 1 : Challenge 7 ]  \n");
 
@@ -34,4 +34,4 @@ void run()
   }
 }
 
-} // namespace set_01::challenge_07
+} // namespace set_01

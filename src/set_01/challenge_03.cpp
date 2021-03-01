@@ -1,4 +1,4 @@
-#pragma once
+#include "set_01/all_challenges.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -6,13 +6,13 @@
 #include <hamarr/bitwise.hpp>
 #include <hamarr/analysis.hpp>
 
-namespace set_01::challenge_03
+namespace set_01
 {
 
 using namespace std::string_literals;
 
 ////////////////////////////////////////////////
-void run()
+void challenge_03()
 {
   spdlog::info("\n\n  [ Set 1 : Challenge 3 ]  \n");
 
@@ -53,4 +53,4 @@ void run()
   }
 }
 
-} // namespace set_01::challenge_03
+} // namespace set_01

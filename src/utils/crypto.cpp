@@ -1,4 +1,4 @@
-#pragma once
+#include "utils/crypto.hpp"
 
 #include <cassert>
 #include <string_view>
@@ -37,15 +37,13 @@ std::string encrypt_under_random_key_and_mode(const std::string &input)
   // Which mode are we using? 0 == ECB, 1 == CBC
   switch (coin_toss)
   {
-    case 0:
-    {
+    case 0: {
       spdlog::info("AES encrypting {} bytes (padded to {}) in ECB mode.", len, len + padding);
 
       return hmr::crypto::aes_ecb_encrypt(modified_input, key);
     }
 
-    case 1:
-    {
+    case 1: {
       // Generate a random IV
       auto iv = hmr::prng::bytes(16);
       spdlog::info("iv:   {}", hmr::hex::encode(iv));

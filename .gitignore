@@ -37,4 +37,7 @@
 # Files and folder we download for use in the challenges - we'll give these the .challenge extension
 challenges/**
 *.challenge
+
+# Other stuff
 build/
+.cache/

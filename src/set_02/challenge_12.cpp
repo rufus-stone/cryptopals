@@ -1,4 +1,4 @@
-#pragma once
+#include "set_02/all_challenges.hpp"
 
 #include <string>
 
@@ -7,12 +7,15 @@
 #include <hamarr/hex.hpp>
 #include <hamarr/base64.hpp>
 #include <hamarr/crypto.hpp>
+#include <hamarr/prng.hpp>
+#include <hamarr/analysis.hpp>
+#include <hamarr/pkcs7.hpp>
 
-namespace set_02::challenge_12
+namespace set_02
 {
 
 ////////////////////////////////////////////////
-void run()
+void challenge_12()
 {
   spdlog::info("\n\n  [ Set 2 : Challenge 12 ]  \n");
 
@@ -142,4 +145,4 @@ void run()
   }
 }
 
-} // namespace set_02::challenge_12
+} // namespace set_02
