@@ -19,12 +19,12 @@ void challenge_08()
 
   auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/8.txt", 1, 8);
 
-  auto data_vec = cp::file_to_vector(file_path);
+  std::vector<std::string> const data_vec = cp::file_to_vector(file_path);
 
-  for (const auto &data : data_vec)
+  for (std::string const &data : data_vec)
   {
     // For each 16 byte block, check if the same 16 byte block occurs later on in the string
-    auto decoded = hmr::hex::decode(data);
+    std::string const decoded = hmr::hex::decode(data);
     auto data_view = std::string_view{decoded};
 
     if (hmr::analysis::repeated_blocks(data_view))

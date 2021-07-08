@@ -14,7 +14,7 @@ namespace cp
 {
 
 // Read in a file one line at a time, and add each line to a vector
-auto file_to_vector(const std::filesystem::path &file_path) -> std::vector<std::string>
+auto file_to_vector(std::filesystem::path const &file_path) -> std::vector<std::string>
 {
   if (!std::filesystem::exists(file_path))
   {
@@ -50,7 +50,7 @@ auto file_to_vector(const std::filesystem::path &file_path) -> std::vector<std::
 }
 
 // Read in a file one line at a time, and concatenate all lines together into a single string
-auto file_to_string(const std::filesystem::path &file_path) -> std::string
+auto file_to_string(std::filesystem::path const &file_path) -> std::string
 {
   if (!std::filesystem::exists(file_path))
   {
@@ -87,9 +87,9 @@ auto file_to_string(const std::filesystem::path &file_path) -> std::string
 
 
 // Download challenge data and return a std::filesystem::path to the download location
-auto download_challenge_data(const std::string &url_string, const std::size_t set_num, const std::size_t chall_num) -> std::filesystem::path
+auto download_challenge_data(std::string const &url_string, std::size_t const set_num, std::size_t const chall_num) -> std::filesystem::path
 {
-  auto home_path_ptr = std::getenv("HOME");
+  char *home_path_ptr = std::getenv("HOME");
 
   // Abort condition - did we find the user's home directory?
   if (home_path_ptr == nullptr)
@@ -99,8 +99,8 @@ auto download_challenge_data(const std::string &url_string, const std::size_t se
   }
 
   // Build path to the Desktop folder
-  const auto home_path = std::string{home_path_ptr};
-  auto desktop_path = std::filesystem::path{home_path + "/Desktop"};
+  std::string const home_path = std::string{home_path_ptr};
+  auto const desktop_path = std::filesystem::path{home_path + "/Desktop"};
 
   // Abort condition - is the Desktop folder where we expect it to be?
   if (!std::filesystem::exists(desktop_path) || !std::filesystem::is_directory(desktop_path))
@@ -110,7 +110,7 @@ auto download_challenge_data(const std::string &url_string, const std::size_t se
   }
 
   // Build path to the given set folder
-  auto set_dir_path = std::filesystem::path{desktop_path / "challenges" / std::to_string(set_num)};
+  auto const set_dir_path = std::filesystem::path{desktop_path / "challenges" / std::to_string(set_num)};
 
   // If the given set folder doesn't exist, create it on the Desktop
   if (!std::filesystem::exists(set_dir_path) || !std::filesystem::is_directory(set_dir_path))
@@ -123,7 +123,7 @@ auto download_challenge_data(const std::string &url_string, const std::size_t se
   }
 
   // Build path to the data file for the challenge
-  const auto set_challenge_path = set_dir_path / (std::to_string(chall_num) + ".challenge");
+  auto const set_challenge_path = set_dir_path / (std::to_string(chall_num) + ".challenge");
 
   // Check if we've already downloaded this challenge's data file
   if (!std::filesystem::exists(set_challenge_path) || (std::filesystem::is_regular_file(set_challenge_path) && std::filesystem::is_empty(set_challenge_path)))
@@ -131,7 +131,7 @@ auto download_challenge_data(const std::string &url_string, const std::size_t se
     spdlog::info("Downloading challenge data file...");
 
     // Download the file - disable SSL verification as otherw we get the error: "SSL certificate problem: unable to get local issuer certificate"
-    auto result = cpr::Get(cpr::Url{url_string}, cpr::VerifySsl{false});
+    cpr::Response const result = cpr::Get(cpr::Url{url_string}, cpr::VerifySsl{false});
 
     spdlog::info("Download status: {}", result.status_code);
 

@@ -19,9 +19,9 @@ void challenge_06()
 
   auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/6.txt", 1, 6);
 
-  auto data = cp::file_to_string(file_path);
+  std::string const data = cp::file_to_string(file_path);
 
-  auto decoded = hmr::base64::decode(data);
+  std::string const decoded = hmr::base64::decode(data);
 
   if (decoded.empty())
   {
@@ -62,9 +62,9 @@ void challenge_06()
 
   // Now solve each transposed_block as though it were a single byte XOR
   auto probable_key = std::string{};
-  for (const auto &transposed_block : transposed_blocks)
+  for (std::string const &transposed_block : transposed_blocks)
   {
-    auto xor_keys = hmr::analysis::solve_single_byte_xor(transposed_block);
+    std::vector<uint8_t> const xor_keys = hmr::analysis::solve_single_byte_xor(transposed_block);
 
     if (xor_keys.size() == 1)
     {
@@ -75,7 +75,7 @@ void challenge_06()
       spdlog::info("Found {} candidate keys for:", xor_keys.size());
       spdlog::info(hmr::hex::encode(transposed_block));
 
-      for (const auto &xor_key : xor_keys)
+      for (uint8_t const xor_key : xor_keys)
       {
         spdlog::info("Key: {}", hmr::hex::encode(xor_key));
       }
