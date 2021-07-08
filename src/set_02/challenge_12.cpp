@@ -20,10 +20,10 @@ void challenge_12()
   spdlog::info("\n\n  [ Set 2 : Challenge 12 ]  \n");
 
   // Generate a random key
-  auto key = hmr::prng::bytes(16);
+  std::string const key = hmr::prng::bytes(16);
 
   // Decode and append the following mystery text to any plaintext before encrypting
-  auto mystery_text = hmr::base64::decode("Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBjYW4gYmxvdwpUaGUgZ2lybGllcyBvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBoaQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK");
+  std::string const mystery_text = hmr::base64::decode("Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBjYW4gYmxvdwpUaGUgZ2lybGllcyBvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBoaQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK");
 
   // Lambda to append the mystery text and encrypt using our random key
   auto encrypt = [&mystery_text](const std::string &input, std::string_view key) -> std::string {
@@ -35,8 +35,8 @@ void challenge_12()
 
   // Pretend we don't know anything about the mystery text
   // We can determine its length (to the nearest block size) by encrypting an empty message
-  auto empty_test = encrypt("", key);
-  std::size_t mystery_text_size = empty_test.size();
+  std::string const empty_test = encrypt("", key);
+  std::size_t const mystery_text_size = empty_test.size();
   spdlog::info("Mystery text size (to nearest block): {}", mystery_text_size);
 
 
@@ -46,7 +46,7 @@ void challenge_12()
   auto discover_block_size = [&encrypt](std::string const &key) -> std::size_t {
     // Keep increasing size of input until size of output changes
     auto plaintext = std::string{"A"};
-    auto ciphertext = encrypt(plaintext, key);
+    std::string ciphertext = encrypt(plaintext, key);
     std::size_t prev_size = ciphertext.size();
 
     // Try block sizes up to 64
@@ -72,8 +72,8 @@ void challenge_12()
   spdlog::info("Discovered block size: {}", block_size);
 
   // 2. Detect that the function is using ECB. You already know, but do this step anyways.
-  auto long_plaintext = std::string{"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}; // 48 identical chars, so if we're dealing with 16 byte blocks in ECB mode we are guaranteed to get at least 2 repeated ciphertext blocks
-  auto long_ciphertext = encrypt(long_plaintext, key);
+  std::string const long_plaintext = std::string{"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}; // 48 identical chars, so if we're dealing with 16 byte blocks in ECB mode we are guaranteed to get at least 2 repeated ciphertext blocks
+  std::string const long_ciphertext = encrypt(long_plaintext, key);
 
   bool is_ecb = hmr::analysis::repeated_blocks(long_ciphertext);
 
@@ -94,8 +94,8 @@ void challenge_12()
     // The length of our input prefix will have to shrink each time, in order that the next unknown char of the mystery text is at the end of the block
     std::size_t const length_of_prefix = (block_size - (1 + reconstructed.size())) % block_size;
 
-    auto const prefix = std::string(length_of_prefix, 'A');
-    auto const real_ciphertext = encrypt(prefix, key);
+    std::string const prefix = std::string(length_of_prefix, 'A');
+    std::string const real_ciphertext = encrypt(prefix, key);
 
     // The length of the ciphertext that we need to compare will increase as we reconstruct more of the mystery text
     std::size_t const length_to_compare = length_of_prefix + reconstructed.size() + 1;
@@ -107,19 +107,19 @@ void challenge_12()
       return;
     }
 
-    auto const real_chunk = real_ciphertext.substr(0, length_to_compare);
+    std::string const real_chunk = real_ciphertext.substr(0, length_to_compare);
 
     // Try each possible final character
     for (std::size_t i = 0; i < 256; ++i)
     {
       // Build the prefix for this test run
-      auto const test_prefix = prefix + reconstructed + static_cast<char>(i);
+      std::string const test_prefix = prefix + reconstructed + static_cast<char>(i);
 
       // Try encrypting
-      auto const test_ciphertext = encrypt(test_prefix, key);
+      std::string const test_ciphertext = encrypt(test_prefix, key);
 
       // Compare the first length_of_prefix+reconstructed.size()+1 bytes
-      auto const test_chunk = test_ciphertext.substr(0, length_to_compare);
+      std::string const test_chunk = test_ciphertext.substr(0, length_to_compare);
 
       // Did this prefix produce ciphertext that matches the real ciphertext?
       // If so, we've found the next char of the mystery text, so can stop the loop!

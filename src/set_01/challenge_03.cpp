@@ -16,7 +16,7 @@ void challenge_03()
 {
   spdlog::info("\n\n  [ Set 1 : Challenge 3 ]  \n");
 
-  auto data = hmr::hex::decode("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"s);
+  std::string const data = hmr::hex::decode("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"s);
 
   spdlog::info("Input   : {}", hmr::hex::encode(data));
 
@@ -27,7 +27,7 @@ void challenge_03()
   // Iterate through all possible single byte keys
   for (std::size_t n = 0; n <= std::numeric_limits<uint8_t>::max(); ++n)
   {
-    auto result = hmr::bitwise::xor_with_key(data, key);
+    std::string const result = hmr::bitwise::xor_with_key(data, key);
 
     if (hmr::analysis::looks_like_english(result))
     {
@@ -45,7 +45,7 @@ void challenge_03()
   {
     spdlog::info("Found {} candidate keys:", possible_keys.size());
 
-    for (const auto &k : possible_keys)
+    for (uint8_t const k : possible_keys)
     {
       spdlog::info("XOR key : {}", hmr::hex::encode(k));
       spdlog::info("Output  : {}", hmr::bitwise::xor_with_key(data, k));

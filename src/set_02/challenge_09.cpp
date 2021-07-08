@@ -18,7 +18,7 @@ void challenge_09()
   auto data = std::string{"YELLOW SUBMARINE"};
   auto expected_result = std::string{"YELLOW SUBMARINE\x04\x04\x04\x04"};
 
-  auto result = hmr::pkcs7::pad(data, 20);
+  std::string const result = hmr::pkcs7::pad(data, 20);
 
   spdlog::info("Input  : {}", data);
 

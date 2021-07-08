@@ -21,7 +21,7 @@ inline void run_all()
   hmr::profile::benchmark(set_02::challenge_11);
   hmr::profile::benchmark(set_02::challenge_12);
   hmr::profile::benchmark(set_02::challenge_13);
-  //hmr::profile::benchmark(set_02::challenge_14);
+  hmr::profile::benchmark(set_02::challenge_14);
   //hmr::profile::benchmark(set_02::challenge_15);
   //hmr::profile::benchmark(set_02::challenge_16);
 }

@@ -17,7 +17,7 @@ void challenge_11()
 {
   spdlog::info("\n\n  [ Set 2 : Challenge 11 ]  \n");
 
-  auto result = cp::encrypt_under_random_key_and_mode("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  std::string const result = cp::encrypt_under_random_key_and_mode("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
   spdlog::info(hmr::hex::encode(result));
   spdlog::info(hmr::analysis::repeated_blocks(result));
