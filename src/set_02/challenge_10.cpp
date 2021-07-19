@@ -22,7 +22,7 @@ void challenge_10()
 {
   spdlog::info("\n\n  [ Set 2 : Challenge 10 ]  \n");
 
-  auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/10.txt", 2, 10);
+  std::filesystem::path const file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/10.txt", 2, 10);
 
   std::string const data = cp::file_to_string(file_path);
 

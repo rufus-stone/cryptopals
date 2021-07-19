@@ -11,29 +11,34 @@ project(
   LANGUAGES CXX)
 
 # Create our executable
-add_executable(
+add_executable(${PROJECT_NAME})
+
+# Add the source files to the target
+target_sources(
   ${PROJECT_NAME}
-  # Main
-  src/main.cpp
-  # Utils
-  src/utils/crypto.cpp
-  src/utils/downloader.cpp
-  # Set 01
-  src/set_01/challenge_01.cpp
-  src/set_01/challenge_02.cpp
-  src/set_01/challenge_03.cpp
-  src/set_01/challenge_04.cpp
-  src/set_01/challenge_05.cpp
-  src/set_01/challenge_06.cpp
-  src/set_01/challenge_07.cpp
-  src/set_01/challenge_08.cpp
-  # Set 02
-  src/set_02/challenge_09.cpp
-  src/set_02/challenge_10.cpp
-  src/set_02/challenge_11.cpp
-  src/set_02/challenge_12.cpp
-  src/set_02/challenge_13.cpp
-  src/set_02/challenge_14.cpp)
+  PRIVATE # Main
+          src/main.cpp
+          # Utils
+          src/utils/crypto.cpp
+          src/utils/downloader.cpp
+          # Set 01
+          src/set_01/challenge_01.cpp
+          src/set_01/challenge_02.cpp
+          src/set_01/challenge_03.cpp
+          src/set_01/challenge_04.cpp
+          src/set_01/challenge_05.cpp
+          src/set_01/challenge_06.cpp
+          src/set_01/challenge_07.cpp
+          src/set_01/challenge_08.cpp
+          # Set 02
+          src/set_02/challenge_09.cpp
+          src/set_02/challenge_10.cpp
+          src/set_02/challenge_11.cpp
+          src/set_02/challenge_12.cpp
+          src/set_02/challenge_13.cpp
+          src/set_02/challenge_14.cpp
+          src/set_02/challenge_15.cpp
+          src/set_02/challenge_16.cpp)
 
 # We're using C++17
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

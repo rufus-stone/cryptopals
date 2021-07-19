@@ -18,7 +18,7 @@ void challenge_07()
 {
   spdlog::info("\n\n  [ Set 1 : Challenge 7 ]  \n");
 
-  auto file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/7.txt", 1, 7);
+  std::filesystem::path const file_path = cp::download_challenge_data("https://cryptopals.com/static/challenge-data/7.txt", 1, 7);
 
   std::string const data = cp::file_to_string(file_path);
 
